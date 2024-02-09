@@ -33,7 +33,7 @@ const Login = () => {
         onTouchEnd={() => console.log("Clicou no botão!")}
         color={colors.bg.text}
         bgColor={colors.main.bg}
-        title="ENTRAR"
+        title="entrar"
       />
 
     </View>
