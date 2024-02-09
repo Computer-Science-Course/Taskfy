@@ -1,1 +1,1 @@
-export const theme = 'light';
+export const theme = 'dark';

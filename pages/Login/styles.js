@@ -28,12 +28,6 @@ const useStyles = (colors) => StyleSheet.create({
     marginLeft: -290,
   },
   textInput: {
-    // height: '6%',
-    // width: '90%',
-    // marginTop: 0,
-    // borderWidth: 1,
-    // backgroundColor: "#EDEDED",
-    // borderWidth: 1,
     width: '90%',
     height: 40,
     borderWidth: 1,

@@ -11,6 +11,7 @@ const useStyles = ({ color, bgColor }) => StyleSheet.create({
     backgroundColor: bgColor,
     borderRadius: 8,
     color: color,
+    marginTop: 25,
   },
   text: {
     color: color,

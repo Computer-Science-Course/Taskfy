@@ -14,7 +14,7 @@ const useStyles = (colors) => StyleSheet.create({
   },
   text: {
     fontSize: 48,
-    marginTop: -150,
+    marginTop: 40,
     color: colors.bg.text, // A cor do texto.
   },
   text_usuario: {
@@ -32,6 +32,17 @@ const useStyles = (colors) => StyleSheet.create({
     marginTop: 60,
     marginLeft: -220,
   },
+  textInput: {
+    width: '90%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingLeft: 10,
+    color: '#fff', // Cor do texto inserido
+    backgroundColor: "white",
+  }
+
 });
 
 export default useStyles;
