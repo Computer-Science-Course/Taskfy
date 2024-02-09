@@ -20,11 +20,11 @@ const useStyles = (colors) => StyleSheet.create({
     fontWeight: "700",
   },
   text_usuario: {
-    fontSize: 20,
+    fontSize: 16,
     width: '100%',
   },
   text_senha: {
-    fontSize: 20,
+    fontSize: 16,
     width: '100%',
   },
   textInput: {
