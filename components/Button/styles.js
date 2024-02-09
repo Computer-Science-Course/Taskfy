@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const useStyles = ({ color, bgColor, fullWidth, size }) => StyleSheet.create({
-  container: {
+  containerButton: {
     display: 'flex',
     alignItems: 'center',
     gap: 8,
