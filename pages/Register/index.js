@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 
 import { theme } from "../../config";
 import { colors } from "../../config/styles";
@@ -11,7 +11,14 @@ const Register = () => {
   return (
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
     <View style={classes.container}>
-      {/* Isso é um comentário! Aqui dentro do view vai o conteúdo da tela. */}
+      <Text style={classes.text}>Cadastro</Text>
+       <Text style={classes.text_usuario}>Usuário</Text>
+      <TextInput>Digite o usuário</TextInput>
+      <Text style={classes.text_senha}>Senha</Text>
+      <TextInput>Digite a senha</TextInput>
+      <Text style={classes.text_repetir_senha}>Repetir senha</Text>
+      <TextInput>Repetir a senha </TextInput>
+      
       <Text style={classes.text}>Register</Text>
     </View>
   );
