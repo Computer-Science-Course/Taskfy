@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput} from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -14,17 +14,28 @@ const Login = () => {
   return (
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
     <View style={classes.container}>
+
       <Text style={classes.text}>Login</Text>
+
       <Text style={classes.text_usuario}>Usuário</Text>
-      <TextInput>Digite o usuário</TextInput>
+      <TextInput style={classes.textInput} placeholder="Digite seu usuário"></TextInput>
+
       <Text style={classes.text_senha}>Senha</Text>
-      <TextInput>Digite a senha</TextInput>
+      <TextInput
+        style={classes.textInput}
+        placeholder="Digite sua senha"
+        
+      >
+
+      </TextInput>
+
       <Button
-        title="ENTRAR"
+        onTouchEnd={() => console.log("Clicou no botão!")}
         color={colors.bg.text}
         bgColor={colors.main.bg}
-        onTouchEnd={() => console.log("Clicou no botão!")}
+        title="ENTRAR"
       />
+
     </View>
   );
 }
