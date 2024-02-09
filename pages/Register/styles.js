@@ -13,7 +13,24 @@ const useStyles = (colors) => StyleSheet.create({
     alignItems: "center", // O conteúdo vai ser centralizado horizontalmente.
   },
   text: {
+    fontSize: 48,
+    marginTop: -150,
     color: colors.bg.text, // A cor do texto.
+  },
+  text_usuario: {
+    fontSize: 20,
+    marginTop: 50,
+    marginLeft: -280,
+  },
+  text_senha:{
+    fontSize: 20,
+    marginTop: 60,
+    marginLeft: -290,
+  },
+  text_repetir_senha:{
+    fontSize: 20,
+    marginTop: 60,
+    marginLeft: -220,
   },
 });
 
