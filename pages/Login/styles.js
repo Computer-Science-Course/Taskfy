@@ -14,7 +14,19 @@ const useStyles = (colors) => StyleSheet.create({
   },
   text: {
     color: colors.bg.text, // A cor do texto.
+    fontSize: 48,
+    marginTop: -350,
   },
+  text_usuario: {
+    fontSize: 20,
+    marginTop: 50,
+    marginLeft: -280,
+  },
+  text_senha: {
+    fontSize: 20,
+    marginTop: 60,
+    marginLeft: -290,
+  }
 });
 
 export default useStyles;
