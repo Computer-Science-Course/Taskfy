@@ -9,8 +9,9 @@ const Button = ({
   color,
   bgColor,
   onTouchEnd,
+  fullWidth = false,
 }) => {
-  const classes = useStyles({ color, bgColor });
+  const classes = useStyles({ color, bgColor, fullWidth });
 
   return (
     <View style={classes.container} onTouchEnd={onTouchEnd}>
