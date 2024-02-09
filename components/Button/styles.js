@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const useStyles = ({ color, bgColor, fullWidth }) => StyleSheet.create({
+const useStyles = ({ color, bgColor, fullWidth, size }) => StyleSheet.create({
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -15,6 +15,7 @@ const useStyles = ({ color, bgColor, fullWidth }) => StyleSheet.create({
   },
   text: {
     color: color,
+    fontSize: size,
   },
 });
 
