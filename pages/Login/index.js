@@ -25,6 +25,7 @@ const Login = () => {
         bgColor={colors.main.bg}
         onTouchEnd={() => console.log("Clicou no botão!")}
       />
+      <Text>Teste Railene</Text>
     </View>
   );
 }
