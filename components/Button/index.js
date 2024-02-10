@@ -22,7 +22,7 @@ const Button = ({
 
   return (
     <View
-      style={classes.container}
+      style={classes.containerButton}
       onTouchEnd={onTouchEnd}
     >
       {
