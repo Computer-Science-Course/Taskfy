@@ -31,12 +31,16 @@ const useStyles = (colors) => StyleSheet.create({
     width: '100%',
     height: 40,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#cccccc',
     borderRadius: 5,
     paddingLeft: 10,
     color: '#fff', // Cor do texto inserido
-    backgroundColor: "white",
-  }
+    backgroundColor: "#2E2E2E",
+  },
+  buttonText: {
+    textDecorationLine: 'underline',
+    fontSize: 16, // Tamanho da fonte
+  },
 });
 
 export default useStyles;
