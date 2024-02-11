@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 import { theme } from "../../config";
 import { colors } from "../../config/styles";
@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
-    <View style={classes.container}>
+    <View style={classes.containerHome}>
       {/* Isso é um comentário! Aqui dentro do view vai o conteúdo da tela. */}
       <Text style={classes.text}>Home</Text>
     </View>

@@ -13,7 +13,7 @@ export const colors = (theme) => (
       },
       secondary: {
         bg: '#392C72',
-        text: '#EDEDED',
+        text: '#9E8CFC',
       },
       red: '#A42A12',
       white: '#EDEDED',

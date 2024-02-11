@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
-const useStyles = ({ color, bgColor, fullWidth, size }) => StyleSheet.create({
+const useStyles = ({ color, bgColor, fullWidth, size, textAlign }) => StyleSheet.create({
   containerButton: {
     display: 'flex',
     alignItems: 'center',
     gap: 8,
-    justifyContent: 'center',
+    justifyContent: textAlign,
     flexDirection: 'row',
     padding: 16,
     backgroundColor: bgColor,

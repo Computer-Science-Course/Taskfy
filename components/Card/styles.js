@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 /** Aqui vão os estilos dos eslementos. Cada estilo pode ter um nome, tal qual "container". */
-const useStyles = ({colors, itemSize}) => StyleSheet.create({
+const useStyles = ({ colors, itemSize }) => StyleSheet.create({
   containerCard: {
     display: "flex",
     backgroundColor: colors.bg[5],
@@ -37,6 +37,13 @@ const useStyles = ({colors, itemSize}) => StyleSheet.create({
     fontSize: itemSize,
     color: colors.white,
     height: 'max-content',
+  },
+  buttonPriority: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    color: 'red'
   },
 });
 

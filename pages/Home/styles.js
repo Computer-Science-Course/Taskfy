@@ -7,6 +7,7 @@ const useStyles = (colors) => StyleSheet.create({
     flex: 1, // Isso faz a view ocupar toda a tela.
     flexDirection: "column", // O conteúdo da view vai ser organizado em coluna. Um embaixo do outro.
     backgroundColor: colors.bg[1], // A cor de fundo da view.
+    gap: 16, // O espaço entre os elementos da view.
 
     /** Essas propriedades podem ser apagadas, se quiseres. */
     justifyContent: "center", // O conteúdo vai ser centralizado verticalmente.

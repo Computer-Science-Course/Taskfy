@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -24,7 +24,7 @@ const Login = () => {
       <TextInput
         style={classes.textInput}
         placeholder="Digite sua senha"
-        
+
       >
 
       </TextInput>
@@ -35,11 +35,11 @@ const Login = () => {
         bgColor={colors.main.bg}
         title="entrar"
       />
-      <TouchableOpacity 
-      onPress={() => console.log('Criar conta')}>
+      <TouchableOpacity
+        onPress={() => console.log('Criar conta')}>
         <Text style={classes.buttonText}>Criar conta</Text>
-    </TouchableOpacity>
-      
+      </TouchableOpacity>
+
     </View>
   );
 }

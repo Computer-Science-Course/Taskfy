@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
 import useStyles from "./styles";
 
@@ -16,14 +16,17 @@ const Button = ({
   bgColor,
   onTouchEnd,
   fullWidth = false,
+  disabled = false,
+  textAlign = 'center',
   size = 'medium',
 }) => {
-  const classes = useStyles({ color, bgColor, fullWidth, size: sizes[size] });
+  const classes = useStyles({ color, bgColor, fullWidth, size: sizes[size], textAlign });
 
   return (
-    <View
+    <TouchableOpacity
       style={classes.containerButton}
-      onTouchEnd={onTouchEnd}
+      onPress={onTouchEnd}
+      disabled={disabled}
     >
       {
         BackIcon &&
@@ -45,7 +48,7 @@ const Button = ({
           color={color}
         />
       }
-    </View>
+    </TouchableOpacity>
   );
 };
 
