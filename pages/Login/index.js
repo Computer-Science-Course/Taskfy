@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image} from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -40,7 +40,11 @@ const Login = () => {
       <TouchableOpacity 
       onPress={() => console.log('Criar conta')}>
         <Text style={classes.buttonText}>Criar conta</Text>
-    </TouchableOpacity>
+      </TouchableOpacity>
+
+      {/* <Image source={require("./assets/Taskfy Login_Register.png")}>
+
+      </Image> */}
       
     </View>
   );
