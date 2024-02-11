@@ -44,8 +44,11 @@ const useStyles = (colors) => StyleSheet.create({
     paddingLeft: 10,
     color: '#fff', // Cor do texto inserido
     backgroundColor: "#2E2E2E",
+  },
+  image_taskfy: {
+    height: 100,
+    width: 200,
   }
-
 });
 
 export default useStyles;

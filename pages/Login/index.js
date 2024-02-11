@@ -42,10 +42,11 @@ const Login = () => {
         <Text style={classes.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
-      {/* <Image 
-      source={require("./src/assets/Taskfy_Login_Register_sem_fundo.png")}
-      /> */}
-      
+      <Image 
+      source={require("../../src/assets/Taskfy_Login_Register_sem_fundo.png")}
+      style={classes.image_taskfy}
+      ></Image>
+
     </View>
   );
 }
