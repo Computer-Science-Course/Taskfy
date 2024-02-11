@@ -13,6 +13,7 @@ const Login = () => {
 
   return (
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
+    
     <View style={classes.container}>
 
       <Text style={classes.text}>Login</Text>
