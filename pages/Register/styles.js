@@ -37,7 +37,7 @@ const useStyles = (colors) => StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderColor: '#cccccc',
     borderRadius: 5,
@@ -48,6 +48,7 @@ const useStyles = (colors) => StyleSheet.create({
   image_taskfy: {
     height: 100,
     width: 200,
+    marginTop: -10,
   }
 });
 
