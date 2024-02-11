@@ -18,16 +18,18 @@ const Login = () => {
       <Text style={classes.text}>Login</Text>
 
       <Text style={classes.text_usuario}>Usuário</Text>
-      <TextInput style={classes.textInput} placeholder="Digite seu usuário"></TextInput>
+      <TextInput 
+      style={classes.textInput} 
+      placeholder="Digite seu usuário"
+      placeholderTextColor="grey"
+      ></TextInput>
 
       <Text style={classes.text_senha}>Senha</Text>
       <TextInput
         style={classes.textInput}
         placeholder="Digite sua senha"
-        
-      >
-
-      </TextInput>
+        placeholderTextColor="grey"        
+      ></TextInput>
 
       <Button
         onTouchEnd={() => console.log("Entrar no App")}
