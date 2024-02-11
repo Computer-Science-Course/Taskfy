@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, Image } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -45,6 +45,11 @@ const Register = () => {
         bgColor={colors.main.bg}
         title="CADASTRAR"
       />
+
+      <Image 
+      source={require("../../src/assets/Taskfy_Login_Register_sem_fundo.png")}
+      style={classes.image_taskfy}
+      ></Image>
 
     </View>
   );

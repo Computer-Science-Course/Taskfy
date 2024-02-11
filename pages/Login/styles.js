@@ -44,6 +44,10 @@ const useStyles = (colors) => StyleSheet.create({
     textDecorationLine: 'underline',
     fontSize: 16, // Tamanho da fonte
   },
+  image_taskfy: {
+    height: 100,
+    width: 200,
+  }
 });
 
 export default useStyles;
