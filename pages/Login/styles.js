@@ -20,10 +20,12 @@ const useStyles = (colors) => StyleSheet.create({
     fontWeight: "700",
   },
   text_usuario: {
+    color: colors.bg.text,
     fontSize: 16,
     width: '100%',
   },
   text_senha: {
+    color: colors.bg.text,
     fontSize: 16,
     width: '100%',
   },
@@ -38,6 +40,7 @@ const useStyles = (colors) => StyleSheet.create({
     backgroundColor: "#2E2E2E",
   },
   buttonText: {
+    color: colors.bg.text,
     textDecorationLine: 'underline',
     fontSize: 16, // Tamanho da fonte
   },
