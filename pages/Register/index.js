@@ -47,7 +47,7 @@ const Register = () => {
       />
 
       <Image 
-      source={require("../../src/assets/Taskfy_Login_Register_sem_fundo.png")}
+      source={require("../../assets/Taskfy_Login_Register_sem_fundo.png")}
       style={classes.image_taskfy}
       ></Image>
 
