@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image} from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -29,8 +29,10 @@ const Login = () => {
       <TextInput
         style={classes.textInput}
         placeholder="Digite sua senha"
-        placeholderTextColor="grey"        
-      ></TextInput>
+
+      >
+
+      </TextInput>
 
       <Button
         onTouchEnd={() => console.log("Entrar no App")}
@@ -38,18 +40,10 @@ const Login = () => {
         bgColor={colors.main.bg}
         title="entrar"
       />
-
-      <TouchableOpacity 
-      onPress={() => console.log('Criar conta')}
-      ><Text 
-      style={classes.buttonText}
-      >Criar conta</Text>
+      <TouchableOpacity
+        onPress={() => console.log('Criar conta')}>
+        <Text style={classes.buttonText}>Criar conta</Text>
       </TouchableOpacity>
-
-      <Image 
-      source={require("../../assets/Taskfy_Login_Register_sem_fundo.png")}
-      style={classes.image_taskfy}
-      ></Image>
 
     </View>
   );
