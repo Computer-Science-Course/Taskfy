@@ -13,12 +13,17 @@ const Login = () => {
 
   return (
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
+    
     <View style={classes.container}>
 
       <Text style={classes.text}>Login</Text>
 
       <Text style={classes.text_usuario}>Usuário</Text>
-      <TextInput style={classes.textInput} placeholder="Digite seu usuário"></TextInput>
+      <TextInput 
+      style={classes.textInput} 
+      placeholder="Digite seu usuário"
+      placeholderTextColor="grey"
+      ></TextInput>
 
       <Text style={classes.text_senha}>Senha</Text>
       <TextInput

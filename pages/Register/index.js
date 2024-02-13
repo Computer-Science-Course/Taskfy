@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, Image } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -21,17 +21,23 @@ const Register = () => {
       <Text style={classes.text_usuario}>Usuário</Text>
       <TextInput
         style={classes.textInput}
-        placeholder="Digite o usuário"></TextInput>
+        placeholder="Digite o usuário"
+        placeholderTextColor='grey'
+        ></TextInput>
 
       <Text style={classes.text_senha}>Senha</Text>
       <TextInput
         style={classes.textInput}
-        placeholder="Digite a senha"></TextInput>
+        placeholder="Digite a senha"
+        placeholderTextColor='grey'
+        ></TextInput>
 
       <Text style={classes.text_repetir_senha}>Repetir senha</Text>
       <TextInput
         style={classes.textInput}
-        placeholder="Repita a senha"></TextInput>
+        placeholder="Repita a senha"
+        placeholderTextColor='grey'
+        ></TextInput>
      
      <Button
         onTouchEnd={() => console.log("Clicou no botão!")}
@@ -39,6 +45,11 @@ const Register = () => {
         bgColor={colors.main.bg}
         title="CADASTRAR"
       />
+
+      <Image 
+      source={require("../../assets/Taskfy_Login_Register_sem_fundo.png")}
+      style={classes.image_taskfy}
+      ></Image>
 
     </View>
   );

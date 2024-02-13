@@ -20,27 +20,35 @@ const useStyles = (colors) => StyleSheet.create({
     fontWeight: "700",
   },
   text_usuario: {
+    color: colors.bg.text,
     fontSize: 16,
     width: '100%',
   },
   text_senha: {
+    color: colors.bg.text,
     fontSize: 16,
     width: '100%',
   },
   textInput: {
     width: '100%',
-    height: 40,
+    height: 50,
     borderWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: colors.bg.text,
     borderRadius: 5,
     paddingLeft: 10,
     color: '#fff', // Cor do texto inserido
-    backgroundColor: "#2E2E2E",
+    backgroundColor: colors.bg[5],
   },
   buttonText: {
+    color: colors.bg.text,
     textDecorationLine: 'underline',
     fontSize: 16, // Tamanho da fonte
   },
+  image_taskfy: {
+    height: 100,
+    width: 200,
+    marginTop: -10,
+  }
 });
 
 export default useStyles;
