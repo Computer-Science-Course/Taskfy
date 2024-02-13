@@ -38,9 +38,12 @@ const Login = () => {
         bgColor={colors.main.bg}
         title="entrar"
       />
+
       <TouchableOpacity 
-      onPress={() => console.log('Criar conta')}>
-        <Text style={classes.buttonText}>Criar conta</Text>
+      onPress={() => console.log('Criar conta')}
+      ><Text 
+      style={classes.buttonText}
+      >Criar conta</Text>
       </TouchableOpacity>
 
       <Image 
