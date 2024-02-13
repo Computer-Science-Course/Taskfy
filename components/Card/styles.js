@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
 
 /** Aqui vão os estilos dos eslementos. Cada estilo pode ter um nome, tal qual "container". */
-const useStyles = ({ colors, itemSize }) => StyleSheet.create({
+const useStyles = ({ colors, itemSize, fullWidth }) => StyleSheet.create({
   containerCard: {
     display: "flex",
     backgroundColor: colors.bg[5],
-    width: 430,
+    width: fullWidth ? '100%' : 430,
     borderRadius: 8,
     padding: 12,
     height: 'max-content',
-    gap: 24
+    gap: 24,
+    position: 'relative',
   },
   bottomButtonsCard: {
     display: "flex",

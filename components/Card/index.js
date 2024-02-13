@@ -11,6 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import TimerPicker from "../TimerPicker";
 import BottomSheetContainer from "../BottomSheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Portal } from "@gorhom/portal";
 
 const itemSize = 24;
 const dateOptions = { day: '2-digit', month: '2-digit' };
@@ -21,17 +22,21 @@ const Card = ({
   initialPriority = 'baixa',
   initialState = 'todo',
   initialIsPlaying = false,
+  initialTitle = '',
+  initialTimer = { hours: 0, minutes: 0 },
+  initialDate = new Date(),
+  fullWidth = false,
 }) => {
-  const [timer, setTimer] = useState({ hours: 0, minutes: 0 });
+  const [timer, setTimer] = useState(initialTimer);
   const [showTimer, setShowTimer] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(initialDate);
   const [showDate, setShowDate] = useState(false);
   const [priority, setPriority] = useState(initialPriority);
   const [cardState, setCardState] = useState(initialState); /** todo, doing, done, late */
   const [isPlaying, setIsPlaying] = useState(initialIsPlaying);
 
   const colors = useColors(theme);
-  const classes = useStyles({ colors, itemSize });
+  const classes = useStyles({ colors, itemSize, fullWidth });
 
   const bottomSheetModalRef = useRef(null);
 
@@ -114,6 +119,7 @@ const Card = ({
             style={classes.inputTextCard}
             placeholderTextColor={colors.bg[11]}
             multiline={true}
+            defaultValue={initialTitle}
           />
           <TouchableOpacity
             onPress={() => console.log('Deletar!')}
@@ -164,34 +170,36 @@ const Card = ({
           )}
         </View>
       </View>
-      {showDate && <DateTimePicker
-        value={date}
-        onChange={handleOnChangeDate}
-      />}
-      {showTimer && <TimerPicker
-        onChange={handleOnChangecountdown}
-        initialHours={timer.hours}
-        initialMinutes={timer.minutes}
-      />}
-      <BottomSheetContainer
-        bottomSheetModalRef={bottomSheetModalRef}
-        handleSheetChanges={handleSheetChanges}
-        title="Prioridade"
-      >
-        {priorityOptions.map(priority => (
-          <Button
-            key={`${priority}-priority`}
-            title={priority}
-            color={colors.white}
-            onTouchEnd={() => {
-              setPriority(priority);
-              bottomSheetModalRef.current?.dismiss();
-            }}
-            fullWidth
-            textAlign="flex-start"
-          />
-        ))}
-      </BottomSheetContainer>
+      <Portal>
+        {showTimer && <TimerPicker
+          onChange={handleOnChangecountdown}
+          initialHours={timer.hours}
+          initialMinutes={timer.minutes}
+        />}
+        {showDate && <DateTimePicker
+          value={date}
+          onChange={handleOnChangeDate}
+        />}
+        <BottomSheetContainer
+          bottomSheetModalRef={bottomSheetModalRef}
+          handleSheetChanges={handleSheetChanges}
+          title="Prioridade"
+        >
+          {priorityOptions.map(priority => (
+            <Button
+              key={`${priority}-priority`}
+              title={priority}
+              color={colors.white}
+              onTouchEnd={() => {
+                setPriority(priority);
+                bottomSheetModalRef.current?.dismiss();
+              }}
+              fullWidth
+              textAlign="flex-start"
+            />
+          ))}
+        </BottomSheetContainer>
+      </Portal>
     </>
   );
 }
