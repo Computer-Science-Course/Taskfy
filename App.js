@@ -3,11 +3,14 @@ import BottomSheetContainer from './components/BottomSheet';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { PortalProvider } from '@gorhom/portal';
 
 const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Home />
+      <PortalProvider>
+        <Home />
+      </PortalProvider>
     </GestureHandlerRootView>
   );
 }
