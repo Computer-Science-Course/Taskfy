@@ -12,6 +12,7 @@ import TimerPicker from "../TimerPicker";
 import BottomSheetContainer from "../BottomSheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Portal } from "@gorhom/portal";
+import { tasksStorage } from "../../services/AsyncStorage";
 
 const itemSize = 24;
 const dateOptions = { day: '2-digit', month: '2-digit' };
@@ -42,8 +43,9 @@ const Card = ({
 
   const bottomSheetModalRef = useRef(null);
 
-  const deleteTask = () => {
+  const deleteTask = async () => {
     handleTasks(prev => prev.filter(task => task.id !== taskId));
+    await tasksStorage.removeValue(taskId);
   }
 
   /** For priorities */

@@ -1,4 +1,5 @@
 import { Image, ScrollView, Text, View } from "react-native";
+import { useEffect, useState } from "react";
 
 import { theme } from "../../config";
 import { colors as useColors } from "../../config/styles";
@@ -7,10 +8,20 @@ import Card from '../../components/Card';
 import Button from "../../components/Button";
 
 import { Plus } from 'lucide-react-native'
-import { useEffect, useState } from "react";
+
+import uuid from 'react-native-uuid';
+import { tasksStorage } from "../../services/AsyncStorage";
 
 const GirlOnPhone = '../../assets/girl_on_phone.png';
 const colors = useColors(theme);
+
+const defaultTask = {
+  duration: { hours: 0, minutes: 0 },
+  priority: 'baixa',
+  date: new Date(),
+  state: 'todo',
+  isPlaying: false,
+}
 
 const NoContent = () => {
   const classes = useStyles(colors);
@@ -37,80 +48,7 @@ const Header = () => {
 }
 
 const Content = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'Card 1',
-      duration: { hours: 1, minutes: 30 },
-      priority: 'baixa',
-      date: new Date(2023, 2, 15),
-      state: 'todo',
-      isPlaying: false,
-    },
-    {
-      id: 2,
-      title: 'Card 2',
-      duration: { hours: 2, minutes: 0 },
-      priority: 'média',
-      date: new Date(),
-      state: 'doing',
-      isPlaying: false,
-    },
-    {
-      id: 3,
-      title: 'Card 3',
-      duration: { hours: 0, minutes: 45 },
-      priority: 'alta',
-      date: new Date(),
-      state: 'done',
-      isPlaying: false,
-    },
-    {
-      id: 4,
-      title: 'Card 4',
-      duration: { hours: 0, minutes: 15 },
-      priority: 'baixa',
-      date: new Date(),
-      state: 'late',
-      isPlaying: false,
-    },
-    {
-      id: 5,
-      title: 'Card 5',
-      duration: { hours: 1, minutes: 0 },
-      priority: 'média',
-      date: new Date(),
-      state: 'todo',
-      isPlaying: false,
-    },
-    {
-      id: 6,
-      title: 'Card 6',
-      duration: { hours: 0, minutes: 30 },
-      priority: 'alta',
-      date: new Date(),
-      state: 'doing',
-      isPlaying: false,
-    },
-    {
-      id: 7,
-      title: 'Card 7',
-      duration: { hours: 0, minutes: 15 },
-      priority: 'baixa',
-      date: new Date(),
-      state: 'done',
-      isPlaying: false,
-    },
-    {
-      id: 8,
-      title: 'Card 8',
-      duration: { hours: 0, minutes: 45 },
-      priority: 'média',
-      date: new Date(),
-      state: 'late',
-      isPlaying: false,
-    }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   const [todoTasks, setTodoTasks] = useState([]);
   const [doingTasks, setDoingTasks] = useState([]);
@@ -125,6 +63,15 @@ const Content = () => {
   };
 
   useEffect(() => {
+    const fetchTasks = async () => {
+      if (tasks.length !== 0) return;
+      const tasksFromStorage = await tasksStorage.getValues();
+      const updatedTasksFromStorage = tasksFromStorage.map(task => (
+        { ...task, date: new Date(task.date) }
+      ));
+      setTasks(updatedTasksFromStorage);
+    }
+    fetchTasks();
     clearTasks();
     tasks.forEach(task => {
       if (task.state === 'todo') {
@@ -249,14 +196,11 @@ const Content = () => {
           size="large"
           bgColor={colors.main.bg}
           color={colors.white}
-          onTouchEnd={() => setTasks(prev => [...prev, {
-            id: prev.length + 1,
-            duration: { hours: 0, minutes: 0 },
-            priority: 'baixa',
-            date: new Date(),
-            state: 'todo',
-            isPlaying: false,
-          }])}
+          onTouchEnd={() => {
+            const newTask = { ...defaultTask, id: uuid.v4() };
+            setTasks(prev => [...prev, newTask]);
+            tasksStorage.setValue(newTask);
+          }}
         />
       </View>
     </>
