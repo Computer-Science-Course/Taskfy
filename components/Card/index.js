@@ -12,6 +12,7 @@ import TimerPicker from "../TimerPicker";
 import BottomSheetContainer from "../BottomSheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Portal } from "@gorhom/portal";
+import { tasksStorage } from "../../services/AsyncStorage";
 
 const itemSize = 24;
 const dateOptions = { day: '2-digit', month: '2-digit' };
@@ -26,6 +27,8 @@ const Card = ({
   initialTimer = { hours: 0, minutes: 0 },
   initialDate = new Date(),
   fullWidth = false,
+  taskId,
+  handleTasks,
 }) => {
   const [timer, setTimer] = useState(initialTimer);
   const [showTimer, setShowTimer] = useState(false);
@@ -39,6 +42,11 @@ const Card = ({
   const classes = useStyles({ colors, itemSize, fullWidth });
 
   const bottomSheetModalRef = useRef(null);
+
+  const deleteTask = async () => {
+    handleTasks(prev => prev.filter(task => task.id !== taskId));
+    await tasksStorage.removeValue(taskId);
+  }
 
   /** For priorities */
   const handlePresentModalPress = useCallback(() => {
@@ -54,8 +62,14 @@ const Card = ({
   }
 
   const handleOnChangeDate = (_, selectedDate) => {
-    setDate(new Date(selectedDate));
     handleShowDate();
+    setDate(new Date(selectedDate));
+    handleTasks(prev => prev.map(task => {
+      if (task.id === taskId) {
+        return { ...task, date: new Date(selectedDate) };
+      }
+      return task;
+    }));
   }
 
   /** For cowntdown */
@@ -68,12 +82,24 @@ const Card = ({
       setTimer({ hours, minutes });
     }
     handleShowCountdown();
+    handleTasks(prev => prev.map(task => {
+      if (task.id === taskId) {
+        return { ...task, duration: { hours, minutes } };
+      }
+      return task;
+    }));
   }
 
   /** For bottom buttons */
   const handlePlayPause = () => {
-    if (!isPlaying && cardState === 'todo') {
+    if (!isPlaying && cardState === 'todo' || cardState === 'late') {
       setCardState('doing');
+      handleTasks(prev => prev.map(task => {
+        if (task.id === taskId) {
+          return { ...task, state: 'doing', isPlaying: true };
+        }
+        return task;
+      }));
     }
     setIsPlaying(prev => !prev);
   }
@@ -90,6 +116,12 @@ const Card = ({
             if (prev.hours === 0) {
               setIsPlaying(false);
               setCardState('done');
+              handleTasks(prev => prev.map(task => {
+                if (task.id === taskId) {
+                  return { ...task, state: 'done', isPlaying: false };
+                }
+                return task;
+              }));
               return prev;
             }
             newHours = prev.hours - 1;
@@ -122,7 +154,7 @@ const Card = ({
             defaultValue={initialTitle}
           />
           <TouchableOpacity
-            onPress={() => console.log('Deletar!')}
+            onPress={deleteTask}
           >
             <Trash
               color={colors.white}
