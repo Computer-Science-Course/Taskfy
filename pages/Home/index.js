@@ -1,10 +1,12 @@
 import { Image, ScrollView, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { theme } from "../../config";
 import { colors as useColors } from "../../config/styles";
 import useStyles from "./styles";
 import Card from '../../components/Card';
 import Button from "../../components/Button";
+
 
 import { Plus } from 'lucide-react-native'
 

@@ -29,10 +29,8 @@ const Login = () => {
       <TextInput
         style={classes.textInput}
         placeholder="Digite sua senha"
-
-      >
-
-      </TextInput>
+        placeholderTextColor="grey"
+      ></TextInput>
 
       <Button
         onTouchEnd={() => console.log("Entrar no App")}
@@ -41,11 +39,12 @@ const Login = () => {
         title="entrar"
       />
       <TouchableOpacity
-        onPress={() => console.log('Criar conta')}>
+        onPress={() => console.log('Criar conta')}> 
         <Text style={classes.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
     </View>
+    
   );
 }
 
