@@ -17,6 +17,9 @@ export const colors = (theme) => (
       },
       red: '#A42A12',
       white: '#EDEDED',
+      lime: {
+        11: '#87BE22',
+      }
     }
     : {
       bg: {
@@ -35,5 +38,8 @@ export const colors = (theme) => (
       },
       red: '#A42A12',
       white: '#EDEDED',
+      lime: {
+        11: '#87BE22',
+      }
     }
 );

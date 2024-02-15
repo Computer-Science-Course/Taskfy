@@ -7,9 +7,10 @@ import useStyles from "./styles";
 import Card from '../../components/Card';
 import Button from "../../components/Button";
 
-import { Plus } from 'lucide-react-native'
+import { Cable, Plus, ShieldQuestion, Signal, Wifi } from 'lucide-react-native'
 
 import uuid from 'react-native-uuid';
+import NetInfo from '@react-native-community/netinfo';
 import { tasksStorage } from "../../services/AsyncStorage";
 
 const GirlOnPhone = '../../assets/girl_on_phone.png';
@@ -23,6 +24,65 @@ const defaultTask = {
   state: 'todo',
   isPlaying: false,
 }
+
+connectionsTypes = {
+  wifi: {
+    Icon: Wifi,
+    title: 'Wi-Fi'
+  },
+  cellular: {
+    Icon: Signal,
+    title: 'Celular'
+  },
+  none: {
+    Icon: Cable,
+    title: 'Sem conexão'
+  },
+  unknown: {
+    Icon: ShieldQuestion,
+    title: 'Sem conexão'
+  }
+}
+
+const MobileDataInfo = () => {
+  const [isConnected, setIsConnected] = useState(false);
+  const [connectionType, setConnectionType] = useState('');
+  const classes = useStyles(colors);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+      setConnectionType(state.type);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const { Icon, title } = connectionsTypes[connectionType || 'none'];
+
+  return (
+    <>
+      {isConnected
+        ? (
+          <View style={classes.mobileDataInfoConnected}>
+            <Text style={{ color: colors.bg[1] }}>
+              Você está utilizando {title}
+            </Text>
+            <Icon color={colors.bg[1]} size={16} />
+          </View>)
+        : (
+          <View style={classes.mobileDataInfoDisconnected}>
+            <Text style={{ color: colors.white }}>
+              Você não está conectado à internet!
+            </Text>
+            <Icon color={colors.white} size={16} />
+          </View>)
+      }
+    </>
+  );
+};
 
 const NoContent = () => {
   const classes = useStyles(colors);
@@ -218,6 +278,7 @@ const Home = () => {
     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
     <View style={classes.containerHome}>
       <Header />
+      <MobileDataInfo />
       <Content />
     </View>
   );
