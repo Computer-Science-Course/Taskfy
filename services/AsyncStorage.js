@@ -19,14 +19,12 @@ class StorageHandler {
   async getValues() {
     try {
       const values = await AsyncStorage.getItem(this.key);
-      if (values !== null) {
-        return JSON.parse(values);
-      }
+      return values ? JSON.parse(values) : [];
     } catch (e) {
       console.log(e);
     }
   }
-
+  
   /**
    * Retrieves a specific value from AsyncStorage based on its ID.
    * @async
