@@ -20,7 +20,7 @@ const Button = ({
   textAlign = 'center',
   size = 'medium',
 }) => {
-  const classes = useStyles({ color, bgColor, fullWidth, size: sizes[size], textAlign });
+  const classes = useStyles({ color, bgColor, fullWidth, size: sizes[size], textAlign, disabled });
 
   return (
     <TouchableOpacity
