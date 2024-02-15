@@ -16,6 +16,7 @@ const GirlOnPhone = '../../assets/girl_on_phone.png';
 const colors = useColors(theme);
 
 const defaultTask = {
+  title: '',
   duration: { hours: 0, minutes: 0 },
   priority: 'baixa',
   date: new Date(),
@@ -73,15 +74,17 @@ const Content = () => {
     }
     fetchTasks();
     clearTasks();
+    const todayAtMidnight = new Date().setHours(0, 0, 0, 0);
     tasks.forEach(task => {
-      if (task.state === 'todo') {
+      if (task.state === 'late' || task.date < todayAtMidnight) {
+        setLateTasks(prev => [...prev, { ...task, state: 'late' }]);
+        tasksStorage.updateValue(task.id, { ...task, state: 'late' });
+      } else if (task.state === 'todo') {
         setTodoTasks(prev => [...prev, task]);
       } else if (task.state === 'doing') {
         setDoingTasks(prev => [...prev, task]);
       } else if (task.state === 'done') {
         setDoneTasks(prev => [...prev, task]);
-      } else if (task.state === 'late') {
-        setLateTasks(prev => [...prev, task]);
       }
     });
   }, [tasks]);

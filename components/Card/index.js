@@ -28,9 +28,10 @@ const Card = ({
   initialDate = new Date(),
   fullWidth = false,
   taskId,
-  handleTasks,
+  handleTasks, /** All tasks */
 }) => {
   const [timer, setTimer] = useState(initialTimer);
+  const [cardTitle, setCardTitle] = useState(initialTitle);
   const [showTimer, setShowTimer] = useState(false);
   const [date, setDate] = useState(initialDate);
   const [showDate, setShowDate] = useState(false);
@@ -46,6 +47,18 @@ const Card = ({
   const deleteTask = async () => {
     handleTasks(prev => prev.filter(task => task.id !== taskId));
     await tasksStorage.removeValue(taskId);
+  }
+
+  /** For Task title */
+  const handleTaskTitle = (textValue) => {
+    setCardTitle(textValue);
+    handleTasks(prev => prev.map(task => {
+      if (task.id === taskId) {
+        tasksStorage.updateValue(taskId, { ...task, title: textValue });
+        return { ...task, title: textValue };
+      }
+      return task;
+    }));
   }
 
   /** For priorities */
@@ -64,9 +77,12 @@ const Card = ({
   const handleOnChangeDate = (_, selectedDate) => {
     handleShowDate();
     setDate(new Date(selectedDate));
+    const todayAtMidnight = new Date().setHours(0, 0, 0, 0);
     handleTasks(prev => prev.map(task => {
       if (task.id === taskId) {
-        return { ...task, date: new Date(selectedDate) };
+        const newState = selectedDate < todayAtMidnight ? 'late' : 'todo';
+        tasksStorage.updateValue(taskId, { ...task, date: new Date(selectedDate), state: newState });
+        return { ...task, date: new Date(selectedDate), state: newState };
       }
       return task;
     }));
@@ -84,6 +100,7 @@ const Card = ({
     handleShowCountdown();
     handleTasks(prev => prev.map(task => {
       if (task.id === taskId) {
+        tasksStorage.updateValue(taskId, { ...task, duration: { hours, minutes } });
         return { ...task, duration: { hours, minutes } };
       }
       return task;
@@ -96,6 +113,7 @@ const Card = ({
       setCardState('doing');
       handleTasks(prev => prev.map(task => {
         if (task.id === taskId) {
+          tasksStorage.updateValue(taskId, { ...task, state: 'doing', isPlaying: true });
           return { ...task, state: 'doing', isPlaying: true };
         }
         return task;
@@ -105,6 +123,7 @@ const Card = ({
   }
 
   /** Timer logic */
+  /** TODO: Improve this approach */
   useEffect(() => {
     let interval;
     if (isPlaying) {
@@ -114,14 +133,6 @@ const Card = ({
           let newHours = prev.hours;
           if (prev.minutes === 0) {
             if (prev.hours === 0) {
-              setIsPlaying(false);
-              setCardState('done');
-              handleTasks(prev => prev.map(task => {
-                if (task.id === taskId) {
-                  return { ...task, state: 'done', isPlaying: false };
-                }
-                return task;
-              }));
               return prev;
             }
             newHours = prev.hours - 1;
@@ -129,6 +140,19 @@ const Card = ({
           } else {
             newMinutes = prev.minutes - 1;
           }
+          handleTasks(prev => prev.map(task => {
+            if (task.id === taskId) {
+              const newTask = {
+                ...task,
+                duration: { hours: newHours, minutes: newMinutes },
+                isPlaying: !(newHours === 0 && newMinutes === 0),
+                state: newHours === 0 && newMinutes === 0 ? 'done' : 'doing',
+              };
+              tasksStorage.updateValue(taskId, newTask);
+              return newTask;
+            }
+            return task;
+          }));
           return { hours: newHours, minutes: newMinutes };
         });
       }, 1000);
@@ -151,7 +175,8 @@ const Card = ({
             style={classes.inputTextCard}
             placeholderTextColor={colors.bg[11]}
             multiline={true}
-            defaultValue={initialTitle}
+            defaultValue={cardTitle}
+            onChangeText={textValue => handleTaskTitle(textValue)}
           />
           <TouchableOpacity
             onPress={deleteTask}
@@ -186,12 +211,12 @@ const Card = ({
               bgColor={colors.secondary.bg}
               color={colors.white}
               onTouchEnd={handleShowDate}
-              FrontIcon={cardState === 'todo' && ChevronDown}
-              disabled={cardState !== 'todo'}
+              FrontIcon={['todo', 'late'].includes(cardState) && ChevronDown}
+              disabled={!['todo', 'late'].includes(cardState)}
             />
 
           </View>
-          {cardState !== 'done' && (
+          {!['done', 'late'].includes(cardState) && (
             <Button
               bgColor={colors.main.bg}
               color={colors.bg[1]}
@@ -223,7 +248,13 @@ const Card = ({
               title={priority}
               color={colors.white}
               onTouchEnd={() => {
-                setPriority(priority);
+                handleTasks(prev => prev.map(task => {
+                  if (task.id === taskId) {
+                    tasksStorage.updateValue(taskId, { ...task, priority });
+                    return { ...task, priority };
+                  }
+                  return task;
+                }));
                 bottomSheetModalRef.current?.dismiss();
               }}
               fullWidth
