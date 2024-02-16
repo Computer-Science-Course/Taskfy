@@ -28,6 +28,10 @@ const Register = () => {
       return Alert.alert('Senhas diferentes', 'Por favor, repita a senha');
     }
 
+    if (!username || !password) {
+      return Alert.alert('Campos obrigatórios', 'Por favor, preencha todos os campos');
+    }
+
     const newUser = {
       id,
       username: username,
@@ -40,6 +44,7 @@ const Register = () => {
       const userExists = users.some((user) => user.username === newUser.username);
       if (!userExists) {
         await usersStorage.setValue(newUser);
+        Alert.alert('Usuário cadastrado!');
       } else {
         return Alert.alert('Usuário já existe!');
       }
