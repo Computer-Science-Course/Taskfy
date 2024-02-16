@@ -1,3 +1,9 @@
+/**
+ * Returns an object containing color values based on the provided theme.
+ *
+ * @param {string} theme - The theme to determine the color values.
+ * @returns {object} - An object containing color values.
+ */
 export const colors = (theme) => (
   theme === 'dark'
     ? {

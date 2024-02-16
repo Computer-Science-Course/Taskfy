@@ -2,6 +2,10 @@ import { Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 
+/**
+ * Sets the notification handler for the app.
+ * This handler determines the behavior of the app when a notification is received.
+ */
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -10,13 +14,26 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function schedulePushNotification(title, body, data = {}) {
+/**
+ * Schedule a push notification.
+ *
+ * @param {string} title - The title of the notification.
+ * @param {string} body - The body of the notification.
+ * @returns {Promise<void>} A promise that resolves when the notification is scheduled.
+ */
+export async function schedulePushNotification(title, body,) {
   await Notifications.scheduleNotificationAsync({
     content: { title, body, data, },
     trigger: { seconds: 2 },
   });
 }
 
+/**
+ * Registers the device for push notifications and returns the push token.
+ * The push token is a unique identifier for the device, and it is used to
+ * send push notifications to the device.
+ * @returns {Promise<string>} The push token.
+ */
 export async function registerForPushNotificationsAsync() {
   let token;
 

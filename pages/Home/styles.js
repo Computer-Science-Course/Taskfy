@@ -56,28 +56,6 @@ const useStyles = (colors) => StyleSheet.create({
     fontWeight: '700',
     color: colors.white,
     width: '100%'
-  },
-  mobileDataInfoConnected: {
-    display: 'flex',
-    gap: 8,
-    backgroundColor: colors.lime[11],
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: colors.main.text,
-    width: '100%',
-    padding: 8,
-  },
-  mobileDataInfoDisconnected: {
-    display: 'flex',
-    gap: 8,
-    backgroundColor: colors.red,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: colors.main.text,
-    width: '100%',
-    padding: 8,
   }
 });
 
