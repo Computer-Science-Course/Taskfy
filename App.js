@@ -30,7 +30,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchIsLogged = async () => {
-      const isLogged = (await isLoggedStorage.getValues()).some(isTrue => isTrue);
+      const isLogged = (await isLoggedStorage.getValues()).length > 0;
       if (isLogged) {
         setDefaultScreen('Home');
       }
