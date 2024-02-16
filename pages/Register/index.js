@@ -48,7 +48,7 @@ const Register = () => {
       } else {
         return Alert.alert('Usuário já existe!');
       }
-      
+
     }
     saveUser(newUser);
   }
@@ -66,7 +66,7 @@ const Register = () => {
         placeholderTextColor='grey'
         onChangeText={setUsername}
         value={username}
-        ></TextInput>
+      ></TextInput>
 
       <Text style={classes.text_senha}>Senha</Text>
       <TextInput
@@ -75,7 +75,7 @@ const Register = () => {
         placeholderTextColor='grey'
         onChangeText={setPassword}
         value={password}
-        ></TextInput>
+      ></TextInput>
 
       <Text style={classes.text_repetir_senha}>Repetir senha</Text>
       <TextInput
@@ -84,18 +84,19 @@ const Register = () => {
         placeholderTextColor='grey'
         onChangeText={setRepeatPassword}
         value={repeatPassword}
-        ></TextInput>
-     
-     <Button
+      ></TextInput>
+
+      <Button
         color={colors.bg.text}
         bgColor={colors.main.bg}
         title="CADASTRAR"
         onTouchEnd={createUser}
+        fullWidth
       />
 
-      <Image 
-      source={require("../../assets/Taskfy_Login_Register_sem_fundo.png")}
-      style={classes.image_taskfy}
+      <Image
+        source={require("../../assets/Taskfy_Login_Register_sem_fundo.png")}
+        style={classes.image_taskfy}
       ></Image>
 
     </View>

@@ -67,6 +67,7 @@ const Login = () => {
         onTouchEnd={handleLogin}
         color={colors.bg.text}
         bgColor={colors.main.bg}
+        fullWidth
         title="entrar"
 
       />
