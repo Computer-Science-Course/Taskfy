@@ -8,12 +8,13 @@ import useStyles from "./styles";
 import Card from '../../components/Card';
 import Button from "../../components/Button";
 
-import { Cable, Plus, ShieldQuestion, Signal, Wifi } from 'lucide-react-native'
+import { Cable, LogOut, Plus, ShieldQuestion, Signal, Wifi } from 'lucide-react-native'
 
 import uuid from 'react-native-uuid';
 import NetInfo from '@react-native-community/netinfo';
-import { tasksStorage } from "../../services/AsyncStorage";
+import { isLoggedStorage, tasksStorage } from "../../services/AsyncStorage";
 import { registerForPushNotificationsAsync, schedulePushNotification } from "../../services/utils/notifications";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 const GirlOnPhone = '../../assets/girl_on_phone.png';
 const colors = useColors(theme);
@@ -110,6 +111,8 @@ const Header = () => {
 }
 
 const Content = () => {
+  const navigation = useNavigation();
+
   const [tasks, setTasks] = useState([]);
 
   const [todoTasks, setTodoTasks] = useState([]);
@@ -119,6 +122,27 @@ const Content = () => {
 
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  const handleLogout = async () => {
+    await isLoggedStorage.clearValues();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'Login' }], // Replace 'Login' with the initial route name of your navigation stack
+      })
+    );
+  };
+
+  const getCurrentUserId = async () => (
+    (await isLoggedStorage.getValues())[0]
+  )
+
+  const handleCreateTask = async () => {
+    const currentUserId = await getCurrentUserId();
+    const newTask = { ...defaultTask, id: uuid.v4(), userId: currentUserId };
+    setTasks(prev => [...prev, newTask]);
+    tasksStorage.setValue(newTask);
+  };
 
   const clearTasks = () => {
     setTodoTasks([]);
@@ -130,7 +154,8 @@ const Content = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       if (tasks.length !== 0) return;
-      const tasksFromStorage = await tasksStorage.getValues();
+      const currentUserId = await getCurrentUserId();
+      const tasksFromStorage = await tasksStorage.getValuesByField('userId', currentUserId);
       const updatedTasksFromStorage = tasksFromStorage.map(task => (
         { ...task, date: new Date(task.date) }
       ));
@@ -275,17 +300,21 @@ const Content = () => {
 
         </ScrollView>
       </View>
-      <View style={{ display: 'flex', position: 'absolute', bottom: 24 }}>
+      <View style={{ width: '100%', display: 'flex', position: 'absolute', right: 0, bottom: 24, flexDirection: 'row', gap: 16, paddingLeft: 16, paddingRight: 86 }}>
+        <Button
+          FrontIcon={LogOut}
+          size="large"
+          bgColor={colors.red}
+          color={colors.white}
+          onTouchEnd={handleLogout}
+        />
         <Button
           FrontIcon={Plus}
           size="large"
           bgColor={colors.main.bg}
           color={colors.white}
-          onTouchEnd={() => {
-            const newTask = { ...defaultTask, id: uuid.v4() };
-            setTasks(prev => [...prev, newTask]);
-            tasksStorage.setValue(newTask);
-          }}
+          onTouchEnd={handleCreateTask}
+          fullWidth
         />
       </View>
     </>

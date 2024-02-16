@@ -7,7 +7,7 @@ import useStyles from "./styles";
 
 import { useNavigation } from '@react-navigation/native';
 import { useState } from "react";
-import { usersStorage } from '../../services/AsyncStorage';
+import { isLoggedStorage, usersStorage } from '../../services/AsyncStorage';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -31,7 +31,8 @@ const Login = () => {
     const user = users.find(user => user.username === username && user.password === password);
 
     if (user) {
-      // Caso o usuário seja encontrado, navega para a tela Home
+      // Caso o usuário seja encontrado, seta o valor de isLogged para o atual usuário e redireciona para a Home
+      await isLoggedStorage.setValue(user.id);
       navigation.navigate('Home');
     } else {
       // Caso contrário, exibe uma mensagem de erro

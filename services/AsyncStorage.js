@@ -47,10 +47,10 @@ class StorageHandler {
    * @param {any} value - The value to match.
    * @returns {Promise<Object>} A promise that resolves to the value object.
    */
-  async getValueByField(field, value) {
+  async getValuesByField(field, value) {
     try {
       const values = await this.getValues();
-      return values.find((item) => item[field] === value);
+      return values.filter((item) => item[field] === value);
     } catch (e) {
       console.log(e);
     }
@@ -101,6 +101,18 @@ class StorageHandler {
         return value;
       });
       await AsyncStorage.setItem(this.key, JSON.stringify(newValues));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  /**
+   * Removes all the values from this key.
+   * @async
+   */
+  async clearValues() {
+    try {
+      await AsyncStorage.removeItem(this.key);
     } catch (e) {
       console.log(e);
     }
