@@ -31,7 +31,7 @@ import { useState } from "react";
 
 //   return (
 //     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
-    
+
 //     <View style={classes.container}>
 
 //       <Text style={classes.text}>Login</Text>
@@ -102,6 +102,7 @@ const Login = () => {
         onTouchEnd={() => navigation.navigate('Home')}
         color={colors.bg.text}
         bgColor={colors.main.bg}
+        fullWidth
         title="entrar"
       />
       <TouchableOpacity

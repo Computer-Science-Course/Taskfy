@@ -1,5 +1,6 @@
 import { Image, ScrollView, Text, View } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import * as Notifications from 'expo-notifications';
 
 import { theme } from "../../config";
 import { colors as useColors } from "../../config/styles";
@@ -12,6 +13,7 @@ import { Cable, Plus, ShieldQuestion, Signal, Wifi } from 'lucide-react-native'
 import uuid from 'react-native-uuid';
 import NetInfo from '@react-native-community/netinfo';
 import { tasksStorage } from "../../services/AsyncStorage";
+import { registerForPushNotificationsAsync, schedulePushNotification } from "../../services/utils/notifications";
 
 const GirlOnPhone = '../../assets/girl_on_phone.png';
 const colors = useColors(theme);
@@ -96,7 +98,6 @@ const NoContent = () => {
       </Text>
     </View>
   );
-
 }
 
 const Header = () => {
@@ -116,6 +117,9 @@ const Content = () => {
   const [doneTasks, setDoneTasks] = useState([]);
   const [lateTasks, setLateTasks] = useState([]);
 
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   const clearTasks = () => {
     setTodoTasks([]);
     setDoingTasks([]);
@@ -132,6 +136,7 @@ const Content = () => {
       ));
       setTasks(updatedTasksFromStorage);
     }
+
     fetchTasks();
     clearTasks();
     const todayAtMidnight = new Date().setHours(0, 0, 0, 0);
@@ -148,6 +153,23 @@ const Content = () => {
       }
     });
   }, [tasks]);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => console.log(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      console.log(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   const classes = useStyles(colors);
   return (

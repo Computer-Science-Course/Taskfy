@@ -24,7 +24,7 @@ class StorageHandler {
       console.log(e);
     }
   }
-  
+
   /**
    * Retrieves a specific value from AsyncStorage based on its ID.
    * @async
@@ -109,3 +109,4 @@ class StorageHandler {
 
 export const usersStorage = new StorageHandler('@taskfy:users');
 export const tasksStorage = new StorageHandler('@taskfy:tasks');
+export const isLoggedStorage = new StorageHandler('@taskfy:isLogged');

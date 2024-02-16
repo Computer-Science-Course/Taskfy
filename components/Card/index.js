@@ -13,6 +13,7 @@ import BottomSheetContainer from "../BottomSheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Portal } from "@gorhom/portal";
 import { tasksStorage } from "../../services/AsyncStorage";
+import { schedulePushNotification } from "../../services/utils/notifications";
 
 const itemSize = 24;
 const dateOptions = { day: '2-digit', month: '2-digit' };
@@ -81,6 +82,9 @@ const Card = ({
     handleTasks(prev => prev.map(task => {
       if (task.id === taskId) {
         const newState = selectedDate < todayAtMidnight ? 'late' : 'todo';
+        if (newState === 'late') {
+          schedulePushNotification('Tarefa atrasada', `A tarefa "${task.title}" está atrasada!`);
+        }
         tasksStorage.updateValue(taskId, { ...task, date: new Date(selectedDate), state: newState });
         return { ...task, date: new Date(selectedDate), state: newState };
       }
@@ -148,6 +152,9 @@ const Card = ({
                 isPlaying: !(newHours === 0 && newMinutes === 0),
                 state: newHours === 0 && newMinutes === 0 ? 'done' : 'doing',
               };
+              if (newTask.state === 'done') {
+                schedulePushNotification('Tarefa concluída', `A tarefa "${task.title}" foi concluída!`);
+              }
               tasksStorage.updateValue(taskId, newTask);
               return newTask;
             }
@@ -249,6 +256,7 @@ const Card = ({
               color={colors.white}
               onTouchEnd={() => {
                 handleTasks(prev => prev.map(task => {
+                  setPriority(priority);
                   if (task.id === taskId) {
                     tasksStorage.updateValue(taskId, { ...task, priority });
                     return { ...task, priority };
