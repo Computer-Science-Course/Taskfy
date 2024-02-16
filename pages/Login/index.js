@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import Button from "../../components/Button";
 
 import { theme } from "../../config";
@@ -7,79 +7,39 @@ import useStyles from "./styles";
 
 import { useNavigation } from '@react-navigation/native';
 import { useState } from "react";
-
-// const Login = () => {
-//   /** As cores estão configuradas, basta usá-las dentro do arquivo styles.js */
-//   const colors = useColors(theme);
-//   const classes = useStyles(colors);
-
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const loginUser = async () => {
-
-//     const userInput = {
-//       username: username,
-//       password: password,
-//     }
-
-//     // Função de Logar
-
-//     // Chamada função
-
-//   }
-
-//   return (
-//     /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
-
-//     <View style={classes.container}>
-
-//       <Text style={classes.text}>Login</Text>
-
-//       <Text style={classes.text_usuario}>Usuário</Text>
-//       <TextInput 
-//       style={classes.textInput} 
-//       placeholder="Digite seu usuário"
-//       placeholderTextColor="grey"
-//       ></TextInput>
-
-//       <Text style={classes.text_senha}>Senha</Text>
-//       <TextInput
-//         style={classes.textInput}
-//         placeholder="Digite sua senha"
-//         placeholderTextColor="grey"
-//       ></TextInput>
-
-//       <Button
-//         onTouchEnd={() => console.log("Entrar no App")}
-//         color={colors.bg.text}
-//         bgColor={colors.main.bg}
-//         title="entrar"
-//       />
-//       <TouchableOpacity
-//         onPress={() => console.log('Criar conta')}>
-//         <Text style={classes.buttonText}>Criar conta</Text>
-//       </TouchableOpacity>
-
-//     </View>
-//   );
-// }
-
-// export default Login;
-
-
+import { usersStorage } from '../../services/AsyncStorage';
 
 const Login = () => {
-  /** Navigator */
   const navigation = useNavigation();
 
-  /** As cores estão configuradas, basta usá-las dentro do arquivo styles.js */
   const colors = useColors(theme);
   const classes = useStyles(colors);
 
-  return (
-    /** Pra usar o estilo, basta chamar ele como no exemplo abaixo. */
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
+  const handleLogin = async () => {
+    // Verifica se os campos estão vazios
+    if (!username || !password) {
+      return Alert.alert('Campos obrigatórios', 'Por favor, preencha todos os campos');
+    }
+
+    // Recupera os dados do usuário do AsyncStorage
+    const users = await usersStorage.getValues();
+
+    // Verifica se o usuário existe e a senha está correta
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+      // Caso o usuário seja encontrado, navega para a tela Home
+      navigation.navigate('Home');
+    } else {
+      // Caso contrário, exibe uma mensagem de erro
+      Alert.alert('Usuário ou senha inválidos', 'Verifique seus dados e tente novamente');
+    }
+  };
+
+  return (
     <View style={classes.container}>
 
       <Text style={classes.text}>Login</Text>
@@ -89,28 +49,36 @@ const Login = () => {
         style={classes.textInput}
         placeholder="Digite seu usuário"
         placeholderTextColor="grey"
-      ></TextInput>
+        onChangeText={text => setUsername(text)}
+        value={username}
+      />
 
       <Text style={classes.text_senha}>Senha</Text>
       <TextInput
         style={classes.textInput}
         placeholder="Digite sua senha"
         placeholderTextColor="grey"
-      ></TextInput>
+        onChangeText={text => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
+      />
 
       <Button
-        onTouchEnd={() => navigation.navigate('Home')}
+        onTouchEnd={handleLogin}
         color={colors.bg.text}
         bgColor={colors.main.bg}
         fullWidth
         title="entrar"
+
       />
+
       <TouchableOpacity
         onPress={() => navigation.navigate('Register')}>
         <Text style={classes.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
     </View>
+
   );
 }
 
